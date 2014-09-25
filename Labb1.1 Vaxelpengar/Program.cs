@@ -11,12 +11,12 @@ namespace Labb1._1_Vaxelpengar
         static void Main(string[] args)
         {
             // Deklarera variabler
-            
+
             double sum,
             paid,
             roundOff,
             change;
-            uint total; 
+            uint total;
 
             //Läser in summan att betala (sum) och testar att det är ett heltal
             while (true)
@@ -25,7 +25,7 @@ namespace Labb1._1_Vaxelpengar
                 {
                     Console.Write("Skriv in summan att betala: ");
                     sum = double.Parse(Console.ReadLine());
-                     break;
+                    break;
                 }
                 catch
                 {
@@ -38,12 +38,12 @@ namespace Labb1._1_Vaxelpengar
 
             // Läsa in erhållet belopp och testa att det är ett heltal
             while (true)
-            { 
+            {
                 try
                 {
                     Console.Write("Skriv in erhållet belopp: ");
                     paid = double.Parse(Console.ReadLine());
-                    break; 
+                    break;
                 }
                 catch
                 {
@@ -55,21 +55,21 @@ namespace Labb1._1_Vaxelpengar
             }
 
             // Rundar av till hela kronor samt visar öresavrundningen
-             total = 0;
-             roundOff = 0;
-             try
-            { 
-            
+            total = 0;
+            roundOff = 0;
+            try
+            {
+
                 total = (uint)Math.Round(sum); //Rundar av till heltal, total är ny sum
                 roundOff = total - sum;  // Öresavrundingen
 
-            
-               if (total < 1) // Testar att total inte är mindre än 1
+
+                if (total < 1) // Testar att total inte är mindre än 1
                 {
                     throw new Exception();
                 }
 
-               
+
             }
             catch
             {
@@ -80,11 +80,11 @@ namespace Labb1._1_Vaxelpengar
             }
 
             change = 0;
-            try 
+            try
             {
                 // Räknar ut växeln
                 change = paid - total;
-            
+
                 if (change < 0)       // Testar att erhållet belopp inte är mindre än priset att betala genom att testa att change inte är mindre än 0
                 {
                     throw new Exception();
@@ -96,7 +96,7 @@ namespace Labb1._1_Vaxelpengar
                 Console.ForegroundColor = ConsoleColor.White;
                 Console.WriteLine("Erhållet belopp är för litet. Köpet kunde inte genomföras.");
                 Console.ResetColor();
-            } 
+            }
 
 
             // Skriver ut kvittot 
@@ -110,7 +110,7 @@ namespace Labb1._1_Vaxelpengar
 
 
             // Växeln ska delas upp i 500,100,50,20-lappar samt 10, 5 och 1-kr
-            
+
             int number = 0;
             int remainingChange = (int)change;
             // Räknar ut antalet 500-lappar genom division

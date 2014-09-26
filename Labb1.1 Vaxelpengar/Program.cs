@@ -10,14 +10,15 @@ namespace Labb1._1_Vaxelpengar
     {
         static void Main(string[] args)
         {
-            // Deklarera variabler
-
+            // Deklarerar variabler
             double sum,
             paid,
             roundOff,
             change;
             uint total;
 
+            total = 0;
+            roundOff = 0;
             //Läser in summan att betala (sum) och testar att det är ett heltal
             while (true)
             {
@@ -25,79 +26,69 @@ namespace Labb1._1_Vaxelpengar
                 {
                     Console.Write("Skriv in summan att betala: ");
                     sum = double.Parse(Console.ReadLine());
+                    total = (uint)Math.Round(sum); //Rundar av till heltal, total är ny sum
+                    roundOff = total - sum;  // Öresavrundingen
+                    
+
+                    if ((int)total < 1) // Testar att total inte är mindre än 1
+                    {
+                        throw new Exception();
+                    }
                     break;
                 }
-                catch
+                catch (FormatException)
                 {
                     Console.BackgroundColor = ConsoleColor.Red;
                     Console.ForegroundColor = ConsoleColor.White;
                     Console.WriteLine("FEL! Du måste ange ett heltal.");
                     Console.ResetColor();
+                    
                 }
+                catch
+                {
+                    Console.BackgroundColor = ConsoleColor.Red;
+                    Console.ForegroundColor = ConsoleColor.White;
+                    Console.WriteLine("Totalsumman är för liten. Köpet kunde inte genomföras.");
+                    Console.ResetColor();
+                    return;
+                }
+                
             }
 
-            // Läsa in erhållet belopp och testa att det är ett heltal
+            // Läser in erhållet belopp och testar att det är ett heltal
+            change = 0;
             while (true)
             {
                 try
                 {
-                    Console.Write("Skriv in erhållet belopp: ");
+                    Console.Write("Skriv in erhållet belopp: "); 
                     paid = double.Parse(Console.ReadLine());
+                    change = paid - total; // Räknar ut växeln
+                    
+                    if (change < 0)  // Testar att erhållet belopp inte är mindre än priset att betala
+                    {
+                        throw new Exception();
+                    }
                     break;
                 }
-                catch
+                catch (FormatException)
                 {
                     Console.BackgroundColor = ConsoleColor.Red;
                     Console.ForegroundColor = ConsoleColor.White;
                     Console.WriteLine("FEL! Du måste ange ett heltal.");
                     Console.ResetColor();
+                    
                 }
-            }
-
-            // Rundar av till hela kronor samt visar öresavrundningen
-            total = 0;
-            roundOff = 0;
-            try
-            {
-
-                total = (uint)Math.Round(sum); //Rundar av till heltal, total är ny sum
-                roundOff = total - sum;  // Öresavrundingen
-
-
-                if (total < 1) // Testar att total inte är mindre än 1
+                catch
                 {
-                    throw new Exception();
+                    Console.BackgroundColor = ConsoleColor.Red;
+                    Console.ForegroundColor = ConsoleColor.White;
+                    Console.WriteLine("Erhållet belopp är för litet. Köpet kunde inte genomföras.");
+                    Console.ResetColor();
+                    return;
                 }
-
-
-            }
-            catch
-            {
-                Console.BackgroundColor = ConsoleColor.Red;
-                Console.ForegroundColor = ConsoleColor.White;
-                Console.WriteLine("Totalsumman är för liten. Köpet kunde inte genomföras.");
-                Console.ResetColor();
-            }
-
-            change = 0;
-            try
-            {
-                // Räknar ut växeln
-                change = paid - total;
-
-                if (change < 0)       // Testar att erhållet belopp inte är mindre än priset att betala genom att testa att change inte är mindre än 0
-                {
-                    throw new Exception();
-                }
-            }
-            catch
-            {
-                Console.BackgroundColor = ConsoleColor.Red;
-                Console.ForegroundColor = ConsoleColor.White;
-                Console.WriteLine("Erhållet belopp är för litet. Köpet kunde inte genomföras.");
-                Console.ResetColor();
-            }
-
+                
+            } 
 
             // Skriver ut kvittot 
             Console.WriteLine("KVITTO");
